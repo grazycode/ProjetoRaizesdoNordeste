@@ -1,13 +1,12 @@
-/* PALETA DE CORES E CONFIGURAÇÕES GERAIS */
 :root {
-    --bg-principal: #fbf9f6;     /* Off-white aconchegante */
-    --terracota: #d35400;        /* Cor principal (Laranja queimado) */
+    --bg-principal: #fbf9f6;     
+    --terracota: #d35400;        
     --terracota-hover: #b34700;  
-    --verde-oliva: #2c3e50;      /* Tons escuros para contraste */
-    --texto-escuro: #2c2520;     /* Preto suave para leitura */
+    --verde-oliva: #2c3e50;      
+    --texto-escuro: #2c2520;     
     --branco: #ffffff;
     --cinza-claro: #f2eee9;
-    --borda-raio: 12px;          /* Bordas arredondadas modernas */
+    --borda-raio: 12px;          
 }
 
 * {
@@ -26,7 +25,6 @@ body {
     line-height: 1.6;
 }
 
-/* MENU SUPERIOR E CABEÇALHO */
 header {
     background-color: var(--branco);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
@@ -90,7 +88,7 @@ nav {
     color: var(--branco);
 }
 
-/* CONTEÚDO PRINCIPAL */
+
 main {
     flex: 1;
     padding: 40px 20px;
@@ -209,7 +207,7 @@ h2 { font-size: 1.6rem; border-bottom: 2px solid var(--cinza-claro); padding-bot
     background-color: var(--terracota-hover);
 }
 
-/* FORMULÁRIOS */
+
 .card-form {
     background-color: var(--branco);
     padding: 25px;
@@ -337,7 +335,7 @@ h2 { font-size: 1.6rem; border-bottom: 2px solid var(--cinza-claro); padding-bot
     box-shadow: 0 2px 6px rgba(0,0,0,0.02);
 }
 
-/* JANELA MODAL DE PAGAMENTO (INTERNA) */
+/* JANELA DE PAGAMENTO */
 .modal-pagamento {
     display: none;
     position: fixed;
@@ -385,7 +383,7 @@ h2 { font-size: 1.6rem; border-bottom: 2px solid var(--cinza-claro); padding-bot
     to { transform: rotate(360deg); }
 }
 
-/* RODAPÉ ESTRUTURADO */
+
 footer {
     background-color: var(--verde-oliva);
     color: rgba(255,255,255,0.8);
@@ -475,9 +473,7 @@ footer {
         transform: translateY(0);
     }
 
-/* ==========================================
-   CONFIGURAÇÕES PARA DISPOSITIVOS MÓVEIS (MOBILE)
-   ========================================== */
+/* CONFIGURAÇÕES PARA DISPOSITIVO MOBILE */
 
 @media (max-width: 768px) {
     /* 1. Menu de Navegação */
@@ -507,7 +503,6 @@ footer {
         padding-top: 8px;
     }
 
-    /* 2. Conteúdo Principal e Seções */
     main {
         padding: 15px 10px;
     }
@@ -517,7 +512,7 @@ footer {
         text-align: center;
     }
 
-    /* 3. Cardápio Receptivo */
+    /* 3. Cardápio */
     .produtos-container {
         grid-template-columns: 1fr; /* Força uma única coluna no celular */
         gap: 15px;
@@ -531,13 +526,13 @@ footer {
     }
 
     .btn-add {
-        width: 100%; /* Botão ocupa toda a largura no celular */
+        width: 100%; 
         text-align: center;
     }
 
     /* 4. Carrinho e Layouts de duas colunas */
     .carrinho-container, .fidelidade-container {
-        grid-template-columns: 1fr; /* Quebra as duas colunas para uma acima da outra */
+        grid-template-columns: 1fr; 
     }
 
     .carrinho-item {
@@ -551,7 +546,7 @@ footer {
         justify-content: space-between;
     }
 
-    /* 5. Modais de Pagamento (Pix / Cartão) */
+    /* 5. Pagamento (Pix / Cartão) */
     .modal-conteudo {
         width: 95%;
         max-width: 100%;
@@ -560,7 +555,6 @@ footer {
         border-radius: 8px;
     }
 
-    /* 6. Rodapé (Footer) */
     .footer-container {
         flex-direction: column;
         text-align: center;
@@ -580,7 +574,7 @@ footer {
 @media (max-width: 480px) {
     .nav-links a {
         font-size: 0.8rem;
-        flex: 1 1 40%; /* Divide os links em blocos menores */
+        flex: 1 1 40%; 
         text-align: center;
     }
     
