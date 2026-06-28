@@ -23,7 +23,6 @@ const cardapioDados = [
     { id: 19, categoria: "Bebida", nome: "Suco de graviola", preco: 8.00, icone: "🍹" }
 ];
 
-// ESTADO GLOBAL DA APLICAÇÃO
 let usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado')) || null;
 let carrinho = []; 
 let totalPedidoGlobal = 0;
