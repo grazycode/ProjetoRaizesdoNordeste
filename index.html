@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurante Raízes do Nordeste</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="nav-links">
+                <a onclick="navegar('inicio')">Início</a>
+                <a onclick="navegar('cardapio')">Cardápio</a>
+                <a onclick="navegar('fidelidade')">Fidelidade</a>
+                <a onclick="navegar('carrinho')">Carrinho (<span id="contador-carrinho">0</span>)</a>
+                <a onclick="navegar('status-pedido')">Pedidos</a>
+                <a id="lnk-login" onclick="navegar('login')">Login/Cadastro</a>
+            </div>
+            <div class="user-status" id="status-usuario">
+                Não conectado
+            </div>
+        </nav>
+    </header>
+
+    <main>
+
+        <section id="inicio" class="secao ativa">
+            <h1>Raízes do Nordeste</h1>
+            
+            <div class="banner-promo">
+                <h3>🔥 Campanha de São João 🔥</h3>
+                <p>Faça seu pedido e ganhe 10 pontos a cada R$ 50,00 reais em compras! Utilize os pontos para ganhar recompensas!</p>
+            </div>
+
+            <div class="info-filial">
+                <h3 style="font-size: 1.1rem; color: var(--terracota); margin-bottom: 5px;">Nossa Única Filial:</h3>
+                <strong>Unidade Aracaju - SE</strong><br>
+                Rua Freitas do Bom Jesus, 182 - CEP: 44444-444<br>
+                Telefone: (79) 9999-9999
+            </div>
+        </section>
+
+        <section id="cardapio" class="secao">
+            <h2>Nosso Cardápio</h2>
+            <p style="margin-bottom: 20px; color: #666;">📍 Exibindo itens da unidade: <strong>Aracaju - SE</strong></p>
+            <div id="conteudo-cardapio"></div>
+        </section>
+
+        <section id="login" class="secao">
+            <h2>Acesse sua Conta ou Cadastre-se</h2>
+            <p style="color: #666; margin-bottom: 25px;">Você precisa estar logado e aceitar os termos para fazer pedidos.</p>
+            
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <div class="card-form">
+                    <h3 style="margin-bottom: 20px;">Já tenho conta (Login)</h3>
+                    <form onsubmit="event.preventDefault(); efetuarLogin();">
+                        <div class="form-grupo">
+                            <label for="login-email">E-mail:</label>
+                            <input type="email" id="login-email" placeholder="exemplo@email.com" required>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="login-senha">Senha:</label>
+                            <input type="password" id="login-senha" required>
+                        </div>
+                        <button type="submit" class="btn-acao" style="background-color: var(--terracota);">ENTRAR</button>
+                    </form>
+                </div>
+
+                <div class="card-form">
+                    <h3 style="margin-bottom: 20px;">Criar Nova Conta (Cadastro)</h3>
+                    <form onsubmit="event.preventDefault(); efetuarCadastro();">
+                        <div class="form-grupo">
+                            <label for="cad-nome">Nome Completo:</label>
+                            <input type="text" id="cad-nome" placeholder="Digite seu nome completo" required minlength="3">
+                        </div>
+                        <div class="form-grupo">
+                            <label for="cad-email">E-mail:</label>
+                            <input type="email" id="cad-email" placeholder="exemplo@email.com" required>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="cad-senha">Senha (Mínimo 6 caracteres):</label>
+                            <input type="password" id="cad-senha" placeholder="Crie uma senha forte" required minlength="6">
+                        </div>
+                        
+                        <div class="lgpd-box">
+                            <input type="checkbox" id="cad-lgpd" required>
+                            <label for="cad-lgpd" style="font-size: 0.85rem; font-weight: normal;"><strong>[LGPD]</strong> Autorizo o uso dos meus dados cadastrais para processamento de pedidos e concordo com a Política de Privacidade.</label>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn-acao">CADASTRAR E LOGAR</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="carrinho" class="secao">
+            <h2>Seu Carrinho</h2>
+            <div id="itens-carrinho" style="background: white; padding: 20px; border-radius: var(--borda-raio);"></div>
+            <div id="resumo-desconto" style="text-align: right; margin-top: 15px; color: #27ae60; font-weight: 600; display: none;">Desconto Fidelidade: -R$ 0,00</div>
+            <div class="total" id="total-carrinho">Total: R$ 0,00</div>
+            <br>
+            <button class="btn-acao" style="background-color: var(--terracota);" onclick="finalizarPedido()">FECHAR PEDIDO e IR PARA PAGAMENTO</button>
+        </section>
+
+        <section id="pagamento" class="secao">
+            <h2>Ambiente de Pagamento</h2>
+            <p style="color:#666; margin-bottom: 20px;">Você foi redirecionado para o ambiente seguro do provedor de pagamento parceiro.</p>
+            
+            <div style="background: #fff; border-radius: var(--borda-raio); padding: 30px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
+                <h3 style="color: var(--terracota);">Gateway de Pagamentos S/A</h3>
+                <p style="font-size: 1.2rem; margin: 15px 0;">Valor da transação: <strong id="pag-valor" style="color: var(--verde-oliva)">R$ 0,00</strong></p>
+                <br>
+                <p style="margin-bottom: 15px;"><strong>Escolha a forma de pagamento:</strong></p>
+                
+                <div style="display: flex; justify-content: center; gap: 30px; margin-bottom: 25px;">
+                    <label style="font-weight: bold; cursor:pointer;">
+                        <input type="radio" name="formaPagamento" value="Cartão de Crédito" checked> 💳 Cartão de Crédito
+                    </label>
+                    <label style="font-weight: bold; cursor:pointer;">
+                        <input type="radio" name="formaPagamento" value="Pix"> 📱 Pix
+                    </label>
+                </div>
+                
+                <button class="btn-acao" style="background-color: #27ae60;" onclick="processarEscolhaPagamento()">Confirmar e Concluir Pagamento</button>
+            </div>
+        </section>
+
+        <section id="status-pedido" class="secao">
+            <h2>Meus Pedidos</h2>
+            <p style="color:#666; margin-bottom: 20px;">Consulte aqui o andamento de suas solicitações:</p>
+            <div id="historico-pedidos-container">
+                <p>Você não realizou nenhum pedido ainda.</p>
+            </div>
+        </section>
+
+        <section id="fidelidade" class="secao">
+            <h2>Programa de Fidelização Raízes</h2>
+            <p style="color:#666; margin-bottom: 25px;">Aqui seus pedidos valem benefícios!</p>
+            
+            <div style="background: #fff; padding: 25px; border-radius: var(--borda-raio); margin-bottom: 30px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.02)">
+                <h3>Seus Pontos Atuais:</h3>
+                <h1 id="fidelidade-pontos" style="color: #27ae60; font-size: 3.5rem; margin: 10px 0;">10</h1>
+                <p style="font-size: 0.9rem; color: #666;">Acumule pontos fazendo pedidos e troque por descontos diretos no valor final da sua compra!</p>
+            </div>
+
+            <h3 style="font-size: 1.1rem; margin-bottom: 15px;">Gastar meus pontos (Escolha um desconto):</h3>
+            
+            <div class="recompensa-box">
+                <div>
+                    <strong>💸 Desconto de R$ 5,00</strong><br>
+                    <small style="color: #777;">Custo: 15 Pontos</small>
+                </div>
+                <button class="btn-add" onclick="resgatarDesconto(15, 5.00)">Resgatar</button>
+            </div>
+
+            <div class="recompensa-box">
+                <div>
+                    <strong>💸 Desconto de R$ 12,00</strong><br>
+                    <small style="color: #777;">Custo: 30 Pontos</small>
+                </div>
+                <button class="btn-add" onclick="resgatarDesconto(30, 12.00)">Resgatar</button>
+            </div>
+
+            <div class="recompensa-box">
+                <div>
+                    <strong>💸 Desconto de R$ 25,00</strong><br>
+                    <small style="color: #777;">Custo: 50 Pontos</small>
+                </div>
+                <button class="btn-add" onclick="resgatarDesconto(50, 25.00)">Resgatar</button>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="modal-cartao" class="modal-pagamento">
+        <div class="modal-conteudo" id="conteudo-cartao">
+            <h3 style="margin-bottom: 15px; color: var(--terracota);">Inserir Dados do Cartão</h3>
+            <form onsubmit="event.preventDefault(); validarEDispararCartao();">
+                <div class="form-grupo">
+                    <label>Número do Cartão:</label>
+                    <input type="text" id="cc-num" placeholder="0000 0000 0000 0000" required maxlength="19">
+                </div>
+                <div class="form-grupo">
+                    <label>Nome Impresso no Cartão:</label>
+                    <input type="text" id="cc-nome" placeholder="JOÃO S SILVA" required style="text-transform: uppercase;" minlength="3">
+                </div>
+                <div style="display: flex; gap: 15px;">
+                    <div class="form-grupo" style="flex: 1;">
+                        <label>Validade:</label>
+                        <input type="text" id="cc-val" placeholder="MM/AA" required maxlength="5">
+                    </div>
+                    <div class="form-grupo" style="flex: 1;">
+                        <label>CVV:</label>
+                        <input type="text" id="cc-cvv" placeholder="000" required maxlength="3">
+                    </div>
+                </div>
+                <button type="submit" class="btn-acao" style="background-color: #27ae60;">Pagar Agora</button>
+                <button type="button" class="btn-acao" style="background-color: #95a5a6; margin-top: 8px;" onclick="fecharModais()">Cancelar</button>
+            </form>
+        </div>
+        <div class="modal-conteudo carregador-pagamento" id="loader-cartao">
+            <div class="carregador"></div>
+            <h3>Processando transação de crédito...</h3>
+            <p style="color: #777; margin-top: 5px;">Aguarde os 5 segundos de comunicação com o banco.</p>
+        </div>
+    </div>
+
+    <div id="modal-pix" class="modal-pagamento">
+        <div class="modal-conteudo" style="text-align: center;">
+            <h3 style="color: #27ae60; margin-bottom: 15px;">Pagamento via Pix</h3>
+            <p style="margin-bottom: 10px;">Utilize a chave CNPJ abaixo para realizar a transferência:</p>
+            <div style="background: var(--cinza-claro); padding: 12px; font-size: 1.2rem; font-weight: bold; border-radius: 8px; margin-bottom: 20px; border: 1px dashed var(--verde-oliva); letter-spacing: 1px;">
+                00.000.000/0001-00
+            </div>
+            <div class="carregador"></div>
+            <p><strong>Aguardando confirmação do pagamento...</strong></p>
+            <p style="color: #777; font-size: 0.9rem; margin-top: 5px;">O sistema validará o Pix automaticamente in 5 segundos.</p>
+            <br>
+            <button class="btn-acao" style="background-color: #e74c3c;" onclick="fecharModais()">Cancelar Pix</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>Raízes do Nordeste</h4>
+                <p>O melhor da culinária nordestina direto na sua mesa, combinando tradição com inovação gastronomia.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Contato & Suporte</h4>
+                <p>📞 Telefone: (79) 9999-9999</p>
+                <p>✉️ E-mail: contato@raizesdonordeste.com</p>
+                <p>📍 Unidade Aracaju - SE</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Raízes do Nordeste S/A. Todos os direitos reservados.<br>
+            CNPJ: 00.000.000/0001-00 | Rua Freitas do Bom Jesus, 182 - CEP: 44444-444 - Aracaju - SE
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
